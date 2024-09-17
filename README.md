@@ -24,7 +24,7 @@ CMake generates a large number of configuration files that can cause the build d
 
 On Windows, and macOS CMake is run using the CMake graphical user interface (GUI). The CMake GUI is also available on Linux, but is generally installed separately, and so the command line interface (CLI) version, _ccmake_ is generally used (see below).
 
-To start the configuration process, enter the path to the root directory of the plugin repository that you've downloaded onto your machine into the box labeled _Where is the source code:_. To insure that you are doing an out-of-source build, enter the path to the _build_ directory of your FEBio Studio repository in the box labeled _Where to build the binaries:_. You may also locate these directories using a file browser by clicking on the _Browse_ buttons to the right of these fields. 
+To start the configuration process, enter the path to the root directory of the plugin repository that you've downloaded onto your machine into the box labeled _Where is the source code:_. To insure that you are doing an out-of-source build, enter the path to the _build_ directory of your plugin repository in the box labeled _Where to build the binaries:_. You may also locate these directories using a file browser by clicking on the _Browse_ buttons to the right of these fields. 
 
 #### ccmake
 
@@ -53,15 +53,14 @@ However, you may be greeted with a dialog saying that there was an error. If thi
 
 Once configuration process completes without any errors, is time to generate the platform-specific build files. It's always a good idea to run Configure one more time before you generate the build files. Once you've run Configure again, click the _Generate_ button (or type `g` if you're using ccmake). On Windows this will generate a Visual Studio Project, on macOS this will generate an XCode Project, and on Linux this will generate a Makefile. If you're running Windows or macOS, you can click the _Open Project_ button and it will automatically open the created project. 
 
-## Building FEBio Studio <a name="build"></a>
+## Building the Plugin <a name="build"></a>
 
 ### Windows
 
-Once you have the Visual Studio project open, you can choose whether you'd like to build a debug or a release version of the software, and then start the build process by either clicking on the Play button, or by pressing _F5_. After a successful build, the software should launch automatically. 
+Once you have the Visual Studio project open, you can choose whether you'd like to build a debug or a release version of the software, and then start the build process by either clicking on the Play button, or by pressing _F5_.
 
 ### macOS
-
-Once you have the XCode project open, you'll want to change the build target from `ALL_BUILD` to `NeoHookeanPl`. Do this by clicking on the button that says `ALL_BUILD` in the upper left corner of XCode, next to the Play and Stop buttons. XCode will fully build FEBioStudio with either target selected, but this will ensure that XCode will automatically launch FEBioStudio after it's been built. Then you can start the build by either click on the Play button, or by pressing ⌘R. After a successful build, the software should launch automatically. 
+Once you have the XCode project open, you can start the build by either click on the Play button, or by pressing ⌘R.
 
 ### Linux
 
@@ -71,8 +70,8 @@ Once the Makefiles have been generated, open a terminal in the _build_ directory
 
 The included CMakeLists.txt file is meant to be easily editable for use in your own plugins. Near the top of the CMakeLists.txt file, there is a section with variables that you should edit in order to adapt this file for use in your plugin.
 
-The value of the _PLUGIN_NAME_ variable should be edited to match the name of your plugin. (e.g. set(PLUGIN_NAME MyPlugin))
+The value of the _PLUGIN_NAME_ variable should be edited to match the name of your plugin. (e.g. `set(PLUGIN_NAME MyPlugin)`)
 
-The value of the _FEBio_LIB_NAMES_ variable should be edited to include all of the FEBio library names that your plugin needs to link to (e.g. set(FEBio_LIB_NAMES fecore febiolib febiomech xml febioplot febiofluid febiomix)). In general, if you include a file from a directory in FEBio's code, you need to link to the library that matches that directory's name. 
+The value of the _FEBio_LIB_NAMES_ variable should be edited to include all of the FEBio library names that your plugin needs to link to (e.g. `set(FEBio_LIB_NAMES fecore febiolib febiomech xml febioplot febiofluid febiomix)`). In general, if you include a file from a directory in FEBio's code, you need to link to the library that matches that directory's name. 
 
 This CMakeLists.txt file should be placed in the same directory as your source and header files. It will automatically include all *.h files in its directoy, and compile  all *.cpp files in its directory.
